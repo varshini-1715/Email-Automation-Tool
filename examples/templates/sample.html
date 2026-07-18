@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Email</title>
+</head>
+<body>
+    <h1>Hello, {{ recipient_name }}</h1>
+
+    <p>
+        This is a sample email from {{ company_name }}.
+    </p>
+
+    <p>
+        Your account ID is {{ account_id }}.
+    </p>
+
+    <p>
+        <a href="{{ login_link }}">Open your account</a>
+    </p>
+
+    <p>
+        Regards,<br>
+        {{ sender_name }}
+    </p>
+</body>
+</html>

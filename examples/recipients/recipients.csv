@@ -1,0 +1,3 @@
+email,recipient_name,account_id,registration_date
+alice@example.com,Alice,ACC-001,2026-07-19
+bob@example.com,Bob,ACC-002,2026-07-19
