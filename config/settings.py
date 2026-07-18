@@ -16,8 +16,10 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 ENV_FILE = BASE_DIR / ".env"
 
-if not load_dotenv(ENV_FILE):
-    raise FileNotFoundError(f".env file not found: {ENV_FILE}")
+# Local development may use .env. Deployed environments may provide the
+# same values directly through operating-system or platform variables.
+if ENV_FILE.is_file():
+    load_dotenv(ENV_FILE)
 
 
 # Read and validate environment variables.
