@@ -216,8 +216,25 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
 # Project-specific
-logs/
-attachments/*.pdf*.py[cod]
+
+# Editor files
 .vscode/
+tempCodeRunnerFile.py
+
+# Local backups
 *.bak
+*.tmp
+
+# Runtime logs and delivery reports
+logs/*
+!logs/.gitkeep
+
+# Local recipient data
+data/*
+!data/.gitkeep
+
+# Local email attachments
+attachments/*
+!attachments/.gitkeep
