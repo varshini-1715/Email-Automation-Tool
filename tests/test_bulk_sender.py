@@ -56,13 +56,9 @@ class TestBulkEmailSender(unittest.TestCase):
         client = MagicMock()
         smtp_cls.return_value.__enter__.return_value = client
 
-        build_email.side_effect = (
-            lambda **kw: self._message(kw["recipient"])
-        )
+        build_email.side_effect = lambda **kw: self._message(kw["recipient"])
 
-        csv_file = self._csv(
-            ["alice@example.com"]
-        )
+        csv_file = self._csv(["alice@example.com"])
 
         summary = self.sender.send(
             csv_file,
@@ -77,11 +73,7 @@ class TestBulkEmailSender(unittest.TestCase):
         self.assertEqual(summary["duplicate_rows"], 0)
 
         client.send.assert_called_once()
-        self.assertTrue(
-            summary["report_file"].endswith(
-                "delivery_report.csv"
-            )
-        )
+        self.assertTrue(summary["report_file"].endswith("delivery_report.csv"))
 
     @patch("services.bulk_sender.build_email")
     @patch("services.bulk_sender.SMTPClient")
@@ -93,9 +85,7 @@ class TestBulkEmailSender(unittest.TestCase):
         client = MagicMock()
         smtp_cls.return_value.__enter__.return_value = client
 
-        build_email.side_effect = (
-            lambda **kw: self._message(kw["recipient"])
-        )
+        build_email.side_effect = lambda **kw: self._message(kw["recipient"])
 
         csv_file = self._csv(
             [
@@ -154,9 +144,7 @@ class TestBulkEmailSender(unittest.TestCase):
             )
 
     def test_empty_email_value(self):
-        csv_file = self._csv(
-            [""]
-        )
+        csv_file = self._csv([""])
 
         summary = self.sender.send(
             csv_file,
@@ -170,9 +158,7 @@ class TestBulkEmailSender(unittest.TestCase):
         self.assertIsNone(summary["report_file"])
 
     def test_invalid_email_value(self):
-        csv_file = self._csv(
-            ["not-an-email"]
-        )
+        csv_file = self._csv(["not-an-email"])
 
         summary = self.sender.send(
             csv_file,
@@ -193,11 +179,7 @@ class TestBulkEmailSender(unittest.TestCase):
             ]
         )
 
-        recipients, total, invalid, duplicate = (
-            self.sender._load_recipients(
-                csv_file
-            )
-        )
+        recipients, total, invalid, duplicate = self.sender._load_recipients(csv_file)
 
         self.assertEqual(
             recipients,
@@ -206,6 +188,7 @@ class TestBulkEmailSender(unittest.TestCase):
         self.assertEqual(total, 2)
         self.assertEqual(invalid, 0)
         self.assertEqual(duplicate, 1)
+
     @patch("services.bulk_sender.build_email")
     @patch("services.bulk_sender.SMTPClient")
     def test_one_failure_does_not_stop_later_recipients(
@@ -216,9 +199,7 @@ class TestBulkEmailSender(unittest.TestCase):
         client = MagicMock()
         smtp_cls.return_value.__enter__.return_value = client
 
-        build_email.side_effect = (
-            lambda **kw: self._message(kw["recipient"])
-        )
+        build_email.side_effect = lambda **kw: self._message(kw["recipient"])
 
         calls = {"count": 0}
 
@@ -262,9 +243,7 @@ class TestBulkEmailSender(unittest.TestCase):
         client = MagicMock()
         smtp_cls.return_value.__enter__.return_value = client
 
-        build_email.side_effect = (
-            lambda **kw: self._message(kw["recipient"])
-        )
+        build_email.side_effect = lambda **kw: self._message(kw["recipient"])
 
         csv_file = self._csv(
             [
@@ -282,11 +261,7 @@ class TestBulkEmailSender(unittest.TestCase):
         self.assertEqual(summary["successful"], 2)
         self.assertEqual(summary["failed"], 0)
         self.assertEqual(summary["failure_details"], [])
-        self.assertTrue(
-            summary["report_file"].endswith(
-                "delivery_report.csv"
-            )
-        )
+        self.assertTrue(summary["report_file"].endswith("delivery_report.csv"))
 
     def test_total_rows_counts_all_processed_rows(self):
         csv_file = self._csv(
@@ -320,13 +295,9 @@ class TestBulkEmailSender(unittest.TestCase):
         client = MagicMock()
         smtp_cls.return_value.__enter__.return_value = client
 
-        build_email.side_effect = (
-            lambda **kw: self._message(kw["recipient"])
-        )
+        build_email.side_effect = lambda **kw: self._message(kw["recipient"])
 
-        csv_file = self._csv(
-            ["fresh@example.com"]
-        )
+        csv_file = self._csv(["fresh@example.com"])
 
         first = self.sender.send(
             csv_file,
@@ -355,13 +326,9 @@ class TestBulkEmailSender(unittest.TestCase):
         client = MagicMock()
         smtp_cls.return_value.__enter__.return_value = client
 
-        build_email.side_effect = (
-            lambda **kw: self._message(kw["recipient"])
-        )
+        build_email.side_effect = lambda **kw: self._message(kw["recipient"])
 
-        csv_file = self._csv(
-            ["report@example.com"]
-        )
+        csv_file = self._csv(["report@example.com"])
 
         summary = self.sender.send(
             csv_file,
@@ -373,11 +340,7 @@ class TestBulkEmailSender(unittest.TestCase):
             summary["report_file"],
             str,
         )
-        self.assertTrue(
-            summary["report_file"].endswith(
-                "delivery_report.csv"
-            )
-        )
+        self.assertTrue(summary["report_file"].endswith("delivery_report.csv"))
 
     @patch("services.bulk_sender.TemplateEngine")
     @patch("services.bulk_sender.build_email")
@@ -394,13 +357,9 @@ class TestBulkEmailSender(unittest.TestCase):
         engine = template_engine.return_value
         engine.render.return_value = "<h1>Hello</h1>"
 
-        build_email.side_effect = (
-            lambda **kw: self._message(kw["recipient"])
-        )
+        build_email.side_effect = lambda **kw: self._message(kw["recipient"])
 
-        csv_file = self._csv(
-            ["template@example.com"]
-        )
+        csv_file = self._csv(["template@example.com"])
 
         self.sender.send(
             csv_file,
@@ -427,9 +386,7 @@ class TestBulkEmailSender(unittest.TestCase):
         client = MagicMock()
         smtp_cls.return_value.__enter__.return_value = client
 
-        build_email.side_effect = (
-            lambda **kw: self._message(kw["recipient"])
-        )
+        build_email.side_effect = lambda **kw: self._message(kw["recipient"])
 
         attachment = self.base / "sample.txt"
         attachment.write_text(
@@ -437,9 +394,7 @@ class TestBulkEmailSender(unittest.TestCase):
             encoding="utf-8",
         )
 
-        csv_file = self._csv(
-            ["attach@example.com"]
-        )
+        csv_file = self._csv(["attach@example.com"])
 
         self.sender.send(
             csv_file,
@@ -452,4 +407,4 @@ class TestBulkEmailSender(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()        
+    unittest.main()

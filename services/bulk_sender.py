@@ -17,7 +17,6 @@ from services.validator import (
 from utils.logger import get_logger
 from utils.report import DeliveryReport
 
-
 logger = get_logger(__name__)
 
 
@@ -48,7 +47,6 @@ class BulkEmailSender:
         Returns a summary dictionary.
         """
         report = DeliveryReport()
-
 
         subject = validate_subject(subject)
         body = validate_body(body)
@@ -187,37 +185,26 @@ class BulkEmailSender:
                 reader = csv.DictReader(file)
 
                 if reader.fieldnames is None:
-                    raise ValueError(
-                        "CSV file is empty."
-                    )
+                    raise ValueError("CSV file is empty.")
 
                 columns = {
-                    column.strip().lower()
-                    for column in reader.fieldnames
-                    if column
+                    column.strip().lower() for column in reader.fieldnames if column
                 }
 
                 if "email" not in columns:
-                    raise ValueError(
-                        "CSV must contain an 'email' column."
-                    )
+                    raise ValueError("CSV must contain an 'email' column.")
 
                 for row in reader:
 
                     total_rows += 1
 
                     raw_email = (
-                        row.get("email")
-                        or row.get("Email")
-                        or row.get("EMAIL")
-                        or ""
+                        row.get("email") or row.get("Email") or row.get("EMAIL") or ""
                     ).strip()
 
                     if not raw_email:
                         invalid_rows += 1
-                        logger.warning(
-                            "Skipping row with empty email."
-                        )
+                        logger.warning("Skipping row with empty email.")
                         continue
 
                     try:
@@ -254,14 +241,10 @@ class BulkEmailSender:
             raise
 
         except csv.Error as exc:
-            raise ValueError(
-                f"Invalid CSV format: {exc}"
-            ) from exc
+            raise ValueError(f"Invalid CSV format: {exc}") from exc
 
         except Exception:
-            logger.exception(
-                "Failed to load CSV file."
-            )
+            logger.exception("Failed to load CSV file.")
             raise
 
         return (

@@ -7,7 +7,6 @@ from pathlib import Path
 
 from config.settings import LOG_LEVEL
 
-
 # Create the logs directory if it does not exist.
 
 LOGS_DIR = Path(__file__).resolve().parent.parent / "logs"

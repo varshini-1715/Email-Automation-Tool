@@ -2,7 +2,6 @@ from pathlib import Path
 
 from utils.logger import get_logger
 
-
 logger = get_logger(__name__)
 
 
@@ -21,8 +20,7 @@ class TemplateEngine:
         """Return all available HTML templates."""
 
         return sorted(
-            template.stem
-            for template in self.template_directory.glob("*.html")
+            template.stem for template in self.template_directory.glob("*.html")
         )
 
     def load_template(self, template_name: str) -> str:
@@ -31,15 +29,11 @@ class TemplateEngine:
         template_file = self.template_directory / f"{template_name}.html"
 
         if not template_file.exists():
-            raise FileNotFoundError(
-                f"Template '{template_name}' does not exist."
-            )
+            raise FileNotFoundError(f"Template '{template_name}' does not exist.")
 
         logger.info("Loading template: %s", template_name)
 
-        return template_file.read_text(
-            encoding="utf-8"
-        )
+        return template_file.read_text(encoding="utf-8")
 
     def render(
         self,
@@ -82,6 +76,4 @@ class TemplateEngine:
         """
 
         if "{{" in html or "}}" in html:
-            raise ValueError(
-                "Template contains unresolved placeholders."
-            )
+            raise ValueError("Template contains unresolved placeholders.")

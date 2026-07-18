@@ -11,19 +11,17 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-
 # Load environment variables.
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ENV_FILE = BASE_DIR / ".env"
 
 if not load_dotenv(ENV_FILE):
-    raise FileNotFoundError(
-        f".env file not found: {ENV_FILE}"
-    )
+    raise FileNotFoundError(f".env file not found: {ENV_FILE}")
 
 
 # Read and validate environment variables.
+
 
 def _get_required_env(variable_name: str) -> str:
     """
@@ -37,21 +35,18 @@ def _get_required_env(variable_name: str) -> str:
     value = os.getenv(variable_name)
 
     if value is None:
-        raise ValueError(
-            f"Required environment variable '{variable_name}' is missing."
-        )
+        raise ValueError(f"Required environment variable '{variable_name}' is missing.")
 
     value = value.strip()
 
     if not value:
-        raise ValueError(
-            f"Environment variable '{variable_name}' cannot be empty."
-        )
+        raise ValueError(f"Environment variable '{variable_name}' cannot be empty.")
 
     return value
 
 
 # Convert environment variables to boolean values.
+
 
 def _get_bool(variable_name: str, default: bool = False) -> bool:
     """
@@ -74,12 +69,11 @@ def _get_bool(variable_name: str, default: bool = False) -> bool:
     if value in false_values:
         return False
 
-    raise ValueError(
-        f"Invalid boolean value for '{variable_name}': '{value}'."
-    )
+    raise ValueError(f"Invalid boolean value for '{variable_name}': '{value}'.")
 
 
 # Convert environment variables to integers.
+
 
 def _get_int(variable_name: str) -> int:
     """
@@ -124,6 +118,5 @@ VALID_LOG_LEVELS = {
 
 if LOG_LEVEL not in VALID_LOG_LEVELS:
     raise ValueError(
-        "LOG_LEVEL must be one of: "
-        f"{', '.join(sorted(VALID_LOG_LEVELS))}."
+        "LOG_LEVEL must be one of: " f"{', '.join(sorted(VALID_LOG_LEVELS))}."
     )

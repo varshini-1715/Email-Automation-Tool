@@ -5,9 +5,7 @@ Validation utilities for the Email Automation Tool.
 from pathlib import Path
 import re
 
-EMAIL_PATTERN = re.compile(
-    r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
-)
+EMAIL_PATTERN = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
 
 
 def validate_email(email: str) -> str:
@@ -94,14 +92,10 @@ def validate_attachment(path: str | Path) -> Path:
     file_path = Path(path).expanduser().resolve()
 
     if not file_path.exists():
-        raise FileNotFoundError(
-            f"Attachment not found: {file_path}"
-        )
+        raise FileNotFoundError(f"Attachment not found: {file_path}")
 
     if not file_path.is_file():
-        raise ValueError(
-            f"Attachment is not a file: {file_path}"
-        )
+        raise ValueError(f"Attachment is not a file: {file_path}")
 
     return file_path
 
@@ -114,15 +108,10 @@ def validate_template(
     Validate template availability.
     """
 
-    template = (
-        Path(template_directory)
-        / f"{template_name}.html"
-    )
+    template = Path(template_directory) / f"{template_name}.html"
 
     if not template.exists():
-        raise FileNotFoundError(
-            f"Template '{template_name}' not found."
-        )
+        raise FileNotFoundError(f"Template '{template_name}' not found.")
 
     return template
 
@@ -146,10 +135,7 @@ def validate_placeholders(
 
     if missing:
 
-        raise ValueError(
-            "Missing placeholder values: "
-            + ", ".join(missing)
-        )
+        raise ValueError("Missing placeholder values: " + ", ".join(missing))
 
 
 def validate_menu_choice(
@@ -163,9 +149,7 @@ def validate_menu_choice(
     choice = choice.strip()
 
     if choice not in valid_choices:
-        raise ValueError(
-            "Invalid menu selection."
-        )
+        raise ValueError("Invalid menu selection.")
 
     return choice
 
@@ -178,9 +162,7 @@ def validate_csv_file(path: str | Path) -> Path:
     file_path = validate_attachment(path)
 
     if file_path.suffix.lower() != ".csv":
-        raise ValueError(
-            "Expected a CSV file."
-        )
+        raise ValueError("Expected a CSV file.")
 
     return file_path
 
@@ -193,8 +175,6 @@ def validate_html(html: str) -> str:
     html = html.strip()
 
     if not html:
-        raise ValueError(
-            "HTML content cannot be empty."
-        )
+        raise ValueError("HTML content cannot be empty.")
 
     return html

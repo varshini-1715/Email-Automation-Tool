@@ -84,10 +84,7 @@ class DeliveryReport:
         Total successful deliveries.
         """
 
-        return sum(
-            record.status == "Success"
-            for record in self._records
-        )
+        return sum(record.status == "Success" for record in self._records)
 
     @property
     def failed(self) -> int:
@@ -143,9 +140,7 @@ class DeliveryReport:
             writer.writeheader()
 
             for record in self._records:
-                writer.writerow(
-                    asdict(record)
-                )
+                writer.writerow(asdict(record))
 
         return output_file
 
@@ -155,6 +150,4 @@ class DeliveryReport:
         Return current local timestamp.
         """
 
-        return datetime.now().strftime(
-            "%Y-%m-%d %H:%M:%S"
-        )
+        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")

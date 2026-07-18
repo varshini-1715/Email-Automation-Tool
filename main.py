@@ -11,7 +11,6 @@ from services.bulk_sender import BulkEmailSender
 from services.template_engine import TemplateEngine
 from utils.logger import get_logger
 
-
 logger = get_logger(__name__)
 
 
@@ -41,33 +40,23 @@ def ask_attachment() -> str | None:
     Ask the user whether an attachment should be included.
     """
 
-    choice = input(
-        "\nAttach a file? (y/n): "
-    ).strip().lower()
+    choice = input("\nAttach a file? (y/n): ").strip().lower()
 
     if choice != "y":
         return None
 
-    path = input(
-        "Attachment path: "
-    ).strip()
+    path = input("Attachment path: ").strip().strip('"').strip("'")
 
     return path or None
 
 
 def send_plain_email() -> None:
 
-    recipient = input(
-        "\nRecipient Email: "
-    ).strip()
+    recipient = input("\nRecipient Email: ").strip()
 
-    subject = input(
-        "Subject: "
-    ).strip()
+    subject = input("Subject: ").strip()
 
-    body = get_multiline_input(
-        "Email Body"
-    )
+    body = get_multiline_input("Email Body")
 
     attachment = ask_attachment()
 
@@ -92,9 +81,7 @@ def send_plain_email() -> None:
 
     except Exception as exc:
 
-        logger.exception(
-            "Failed to send email."
-        )
+        logger.exception("Failed to send email.")
 
         print(f"\nError: {exc}")
 
@@ -119,51 +106,35 @@ def send_template_email() -> None:
 
     try:
 
-        choice = int(
-            input("\nChoose template: ")
-        )
+        choice = int(input("\nChoose template: "))
 
-        template_name = templates[
-            choice - 1
-        ]
+        template_name = templates[choice - 1]
 
     except (ValueError, IndexError):
 
         print("\nInvalid selection.")
         return
 
-    recipient = input(
-        "\nRecipient Email: "
-    ).strip()
+    recipient = input("\nRecipient Email: ").strip()
 
-    subject = input(
-        "Subject: "
-    ).strip()
+    subject = input("Subject: ").strip()
 
     placeholders: dict[str, str] = {}
 
-    print(
-        "\nEnter placeholder values."
-    )
+    print("\nEnter placeholder values.")
 
     while True:
 
-        key = input(
-            "Placeholder name (blank to finish): "
-        ).strip()
+        key = input("Placeholder name (blank to finish): ").strip()
 
         if not key:
             break
 
-        value = input(
-            f"{key}: "
-        )
+        value = input(f"{key}: ")
 
         placeholders[key] = value
 
-    plain_body = get_multiline_input(
-        "\nPlain text fallback"
-    )
+    plain_body = get_multiline_input("\nPlain text fallback")
 
     attachment = ask_attachment()
 
@@ -194,36 +165,22 @@ def send_template_email() -> None:
 
     except Exception as exc:
 
-        logger.exception(
-            "Template email failed."
-        )
+        logger.exception("Template email failed.")
 
         print(f"\nError: {exc}")
 
 
 def send_bulk_email() -> None:
 
-    csv_path = input(
-        "\nCSV file path: "
-    ).strip()
+    csv_path = input("\nCSV file path: ").strip()
 
-    subject = input(
-        "Subject: "
-    ).strip()
+    subject = input("Subject: ").strip()
 
-    body = get_multiline_input(
-        "Email Body"
-    )
+    body = get_multiline_input("Email Body")
 
     attachment = ask_attachment()
 
-    use_template = (
-        input(
-            "\nUse HTML template? (y/n): "
-        )
-        .strip()
-        .lower()
-    ) == "y"
+    use_template = (input("\nUse HTML template? (y/n): ").strip().lower()) == "y"
 
     template_name = None
     placeholders = None
@@ -236,9 +193,7 @@ def send_bulk_email() -> None:
 
         if not templates:
 
-            print(
-                "\nNo templates available."
-            )
+            print("\nNo templates available.")
 
             return
 
@@ -248,48 +203,32 @@ def send_bulk_email() -> None:
             templates,
             start=1,
         ):
-            print(
-                f"{index}. {template}"
-            )
+            print(f"{index}. {template}")
 
         try:
 
-            selection = int(
-                input(
-                    "\nChoose template: "
-                )
-            )
+            selection = int(input("\nChoose template: "))
 
-            template_name = templates[
-                selection - 1
-            ]
+            template_name = templates[selection - 1]
 
         except (ValueError, IndexError):
 
-            print(
-                "\nInvalid template."
-            )
+            print("\nInvalid template.")
 
             return
 
         placeholders = {}
 
-        print(
-            "\nEnter placeholder values."
-        )
+        print("\nEnter placeholder values.")
 
         while True:
 
-            key = input(
-                "Placeholder (blank to finish): "
-            ).strip()
+            key = input("Placeholder (blank to finish): ").strip()
 
             if not key:
                 break
 
-            placeholders[key] = input(
-                f"{key}: "
-            )
+            placeholders[key] = input(f"{key}: ")
 
     sender = BulkEmailSender()
 
@@ -306,51 +245,31 @@ def send_bulk_email() -> None:
 
         print("\nBulk email completed.\n")
 
-        print(
-            f"Total Rows      : {summary['total_rows']}"
-        )
+        print(f"Total Rows      : {summary['total_rows']}")
 
-        print(
-            f"Successful      : {summary['successful']}"
-        )
+        print(f"Successful      : {summary['successful']}")
 
-        print(
-            f"Failed          : {summary['failed']}"
-        )
+        print(f"Failed          : {summary['failed']}")
 
-        print(
-            f"Invalid Rows    : {summary['invalid_rows']}"
-        )
+        print(f"Invalid Rows    : {summary['invalid_rows']}")
 
-        print(
-            f"Duplicate Rows  : {summary['duplicate_rows']}"
-        )
+        print(f"Duplicate Rows  : {summary['duplicate_rows']}")
 
         report_file = summary.get("report_file")
 
-        print(
-            f"Report          : {report_file or 'Not generated'}"
-        )
+        print(f"Report          : {report_file or 'Not generated'}")
 
         if summary["failure_details"]:
 
-            print(
-                "\nFailure Details:\n"
-            )
+            print("\nFailure Details:\n")
 
-            for failure in summary[
-                "failure_details"
-            ]:
+            for failure in summary["failure_details"]:
 
-                print(
-                    f"- {failure['recipient']} -> {failure['error']}"
-                )
+                print(f"- {failure['recipient']} -> {failure['error']}")
 
     except Exception as exc:
 
-        logger.exception(
-            "Bulk email failed."
-        )
+        logger.exception("Bulk email failed.")
 
         print(f"\nError: {exc}")
 
@@ -359,8 +278,7 @@ def main() -> None:
 
     while True:
 
-        print(
-            """
+        print("""
 ==============================
 Email Automation Tool
 ==============================
@@ -369,12 +287,9 @@ Email Automation Tool
 2. Template Email
 3. Bulk Email
 4. Exit
-"""
-        )
+""")
 
-        choice = input(
-            "Choose an option: "
-        ).strip()
+        choice = input("Choose an option: ").strip()
 
         if choice == "1":
             send_plain_email()
@@ -390,9 +305,7 @@ Email Automation Tool
             break
 
         else:
-            print(
-                "\nInvalid option."
-            )
+            print("\nInvalid option.")
 
 
 if __name__ == "__main__":

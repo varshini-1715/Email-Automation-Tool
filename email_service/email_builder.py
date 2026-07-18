@@ -11,7 +11,7 @@ def build_email(
     recipient: str,
     subject: str,
     body: str,
-    html_body: str |None = None,
+    html_body: str | None = None,
 ) -> EmailMessage:
     """
     Build and return an email message.
