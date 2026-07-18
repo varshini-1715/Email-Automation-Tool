@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Invitation</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 30px;
+            background-color: #f4f6f8;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #333333;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .header {
+            background-color: #0d6efd;
+            color: #ffffff;
+            text-align: center;
+            padding: 25px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .content {
+            padding: 30px;
+            line-height: 1.7;
+        }
+
+        .details {
+            background-color: #f8f9fa;
+            border-left: 4px solid #0d6efd;
+            padding: 18px;
+            margin: 25px 0;
+        }
+
+        .details p {
+            margin: 8px 0;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #0d6efd;
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 12px 22px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #777777;
+            border-top: 1px solid #eeeeee;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>{{company_name}}</h1>
+    </div>
+
+    <div class="content">
+
+        <p>Hello <strong>{{recipient_name}}</strong>,</p>
+
+        <p>
+            You are invited to attend the following meeting.
+            Please review the details below.
+        </p>
+
+        <div class="details">
+
+            <p><strong>Meeting Title:</strong> {{meeting_title}}</p>
+
+            <p><strong>Date:</strong> {{meeting_date}}</p>
+
+            <p><strong>Time:</strong> {{meeting_time}}</p>
+
+            <p><strong>Location:</strong> {{meeting_location}}</p>
+
+            <p><strong>Organizer:</strong> {{organizer_name}}</p>
+
+        </div>
+
+        <p>
+            Please join the meeting on time.
+        </p>
+
+        <a class="button" href="{{meeting_link}}">
+            Join Meeting
+        </a>
+
+        <p style="margin-top:40px;">
+            Regards,<br>
+            <strong>{{sender_name}}</strong><br>
+            {{company_name}}
+        </p>
+
+    </div>
+
+    <div class="footer">
+        This is an automated email from {{company_name}}.
+        Please do not reply to this email.
+    </div>
+
+</div>
+
+</body>
+</html>

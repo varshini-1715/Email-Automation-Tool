@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{email_title}}</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 30px;
+            background-color: #f4f6f8;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #333333;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .header {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 28px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .content {
+            padding: 35px;
+            line-height: 1.8;
+        }
+
+        .message {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #343a40;
+            white-space: pre-line;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #343a40;
+            color: #ffffff !important;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .footer {
+            border-top: 1px solid #eeeeee;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #777777;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>{{company_name}}</h1>
+
+    </div>
+
+    <div class="content">
+
+        <p>Hello <strong>{{recipient_name}}</strong>,</p>
+
+        <p>{{greeting_message}}</p>
+
+        <div class="message">
+
+{{email_message}}
+
+        </div>
+
+        <a class="button" href="{{action_link}}">
+
+            {{button_text}}
+
+        </a>
+
+        <p style="margin-top:40px;">
+
+            Regards,<br>
+
+            <strong>{{sender_name}}</strong><br>
+
+            {{company_name}}
+
+        </p>
+
+    </div>
+
+    <div class="footer">
+
+        This is an automated email from {{company_name}}.
+
+        Please do not reply to this email.
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

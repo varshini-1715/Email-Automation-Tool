@@ -218,4 +218,6 @@ __marimo__/
 .streamlit/secrets.toml
 # Project-specific
 logs/
-attachments/*.pdf
+attachments/*.pdf*.py[cod]
+.vscode/
+*.bak
